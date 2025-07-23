@@ -517,4 +517,44 @@ class NarrativeService:
             if state:
                 # Marcar fragmentos como descubiertos en story_flags
                 if "discovered_fragments" not in state.story_flags:
-                    state.story_flags["discovere
+                    state.story_flags["discovered_fragments"] = []
+                
+                # Agregar fragmentos desbloqueados
+                for fragment_id in rewards.unlock_fragments:
+                    if fragment_id not in state.story_flags["discovered_fragments"]:
+                        state.story_flags["discovered_fragments"].append(fragment_id)
+
+    async def _check_and_award_achievement(
+        self,
+        user_id: int, 
+        achievement_id: str
+    ) -> Optional[object]:
+        """Verifica y otorga un logro específico"""
+        # Implementación simple - retorna None por ahora
+        # TODO: Integrar con sistema de logros real
+        return None
+
+    async def _unlock_lore_piece(self, user_id: int, lore_code: str) -> None:
+        """Desbloquea una pieza de lore para el usuario"""
+        # TODO: Implementar desbloqueo de lore
+        pass
+
+    async def _give_narrative_points(self, user_id: int, points: int) -> None:
+        """Otorga puntos narrativos al usuario"""
+        # TODO: Implementar sistema de puntos
+        pass
+
+    async def _record_fragment_visit(self, fragment_id: str) -> None:
+        """Registra la visita a un fragmento para métricas"""
+        # TODO: Implementar métricas
+        pass
+
+    async def _record_choice_metric(self, fragment_id: str, choice_id: str) -> None:
+        """Registra una elección para métricas"""
+        # TODO: Implementar métricas
+        pass
+
+    async def _create_checkpoint(self, user_id: int, state: UserNarrativeState) -> None:
+        """Crea un checkpoint del estado actual"""
+        # TODO: Implementar sistema de checkpoints
+        pass
