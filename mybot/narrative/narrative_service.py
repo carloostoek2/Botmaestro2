@@ -66,6 +66,7 @@ class NarrativeService:
         
         # Verificar acceso VIP si es necesario
         if story.requires_vip:
+            from database.models import User
             user = await self.session.get(User, user_id)
             # REF: [database/models.py] User.role
             if user.role != "vip":
