@@ -433,6 +433,7 @@ class NarrativeService:
     
     async def _get_user_data_for_requirements(self, user_id: int) -> Dict[str, Any]:
         """Obtiene datos del usuario necesarios para verificar requisitos"""
+        from database.models import User
         user = await self.session.get(User, user_id)
         state = await self.get_user_state(user_id)
         
