@@ -340,4 +340,117 @@ class NarrativeKeyboards:
         )
         
         return builder.as_markup()
+    
+    @staticmethod
+    def admin_main_menu() -> InlineKeyboardMarkup:
+        """Menú principal de administración narrativa"""
+        builder = InlineKeyboardBuilder()
+        
+        builder.row(
+            InlineKeyboardButton(text="📊 Estadísticas", callback_data="nadmin_stats"),
+            InlineKeyboardButton(text="👥 Usuarios", callback_data="nadmin_users")
+        )
+        builder.row(
+            InlineKeyboardButton(text="📖 Historias", callback_data="nadmin_stories"),
+            InlineKeyboardButton(text="🔧 Debug", callback_data="nadmin_debug")
+        )
+        builder.row(
+            InlineKeyboardButton(text="🔄 Recargar", callback_data="nadmin_reload_stories")
+        )
+        
+        return builder.as_markup()
+    
+    @staticmethod
+    def admin_stats_menu() -> InlineKeyboardMarkup:
+        """Menú de estadísticas admin"""
+        builder = InlineKeyboardBuilder()
+        
+        builder.row(
+            InlineKeyboardButton(text="📈 Detalladas", callback_data="nadmin_detailed_stats"),
+            InlineKeyboardButton(text="📊 Por Historia", callback_data="nadmin_story_stats")
+        )
+        builder.row(
+            InlineKeyboardButton(text="🔙 Atrás", callback_data="nadmin_back")
+        )
+        
+        return builder.as_markup()
+    
+    @staticmethod
+    def admin_users_menu() -> InlineKeyboardMarkup:
+        """Menú de usuarios admin"""
+        builder = InlineKeyboardBuilder()
+        
+        builder.row(
+            InlineKeyboardButton(text="🔍 Buscar Usuario", callback_data="nadmin_search_user"),
+            InlineKeyboardButton(text="🔄 Resetear Usuario", callback_data="nadmin_reset_user")
+        )
+        builder.row(
+            InlineKeyboardButton(text="🔙 Atrás", callback_data="nadmin_back")
+        )
+        
+        return builder.as_markup()
+    
+    @staticmethod
+    def admin_stories_menu() -> InlineKeyboardMarkup:
+        """Menú de gestión de historias"""
+        builder = InlineKeyboardBuilder()
+        
+        builder.row(
+            InlineKeyboardButton(text="🔄 Recargar JSON", callback_data="nadmin_reload_stories"),
+            InlineKeyboardButton(text="🔍 Validar", callback_data="nadmin_validate_stories")
+        )
+        builder.row(
+            InlineKeyboardButton(text="📊 Stats por Historia", callback_data="nadmin_story_detailed")
+        )
+        builder.row(
+            InlineKeyboardButton(text="🔙 Atrás", callback_data="nadmin_back")
+        )
+        
+        return builder.as_markup()
+    
+    @staticmethod
+    def admin_debug_menu() -> InlineKeyboardMarkup:
+        """Menú de herramientas de debug"""
+        builder = InlineKeyboardBuilder()
+        
+        builder.row(
+            InlineKeyboardButton(text="🔍 Estados Huérfanos", callback_data="nadmin_check_orphans"),
+            InlineKeyboardButton(text="🧹 Limpiar DB", callback_data="nadmin_cleanup")
+        )
+        builder.row(
+            InlineKeyboardButton(text="📊 Regenerar Métricas", callback_data="nadmin_regenerate_metrics")
+        )
+        builder.row(
+            InlineKeyboardButton(text="🔙 Atrás", callback_data="nadmin_back")
+        )
+        
+        return builder.as_markup()
+    
+    @staticmethod
+    def admin_orphan_cleanup(has_orphans: bool) -> InlineKeyboardMarkup:
+        """Opciones para limpiar estados huérfanos"""  
+        builder = InlineKeyboardBuilder()
+        
+        if has_orphans:
+            builder.row(
+                InlineKeyboardButton(text="🧹 Limpiar Todo", callback_data="nadmin_clean_all_orphans"),
+                InlineKeyboardButton(text="🔧 Reparar", callback_data="nadmin_repair_orphans")
+            )
+        
+        builder.row(
+            InlineKeyboardButton(text="🔙 Atrás", callback_data="nadmin_debug")
+        )
+        
+        return builder.as_markup()
+    
+    @staticmethod
+    def admin_back_button() -> InlineKeyboardMarkup:
+        """Simple botón de atrás para admin"""
+        builder = InlineKeyboardBuilder()
+        
+        builder.row(
+            InlineKeyboardButton(text="🔙 Atrás", callback_data="nadmin_back")
+        )
+        
+        return builder.as_markup()
       
