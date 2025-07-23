@@ -84,7 +84,7 @@
             "relationships": {"diana": 30},
             "story_flags": {"sacrifice": "mortality"}
           }
-                },
+        },
         {
           "id": "sacrifice_nothing",
           "text": "No sacrificaría nada, deseo mantener mi humanidad intacta",
