@@ -348,14 +348,4 @@ async def _display_fragment(
     )
 
 
-async def is_vip_active(user_id: int, session: AsyncSession) -> bool:
-    """Verificar si el usuario tiene VIP activo"""
-    from utils.user_roles import get_user_role
-    # Necesitamos el bot para verificar el rol, pero como no lo tenemos aquí,
-    # verificamos directamente en la base de datos
-    user = await session.get(User, user_id)
-    if user and user.role == "vip":
-        from datetime import datetime
-        if user.vip_expires_at is None or user.vip_expires_at > datetime.utcnow():
-            return True
-    return False
+# Función auxiliar eliminada - se usa la importada desde utils.user_roles
