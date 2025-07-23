@@ -533,31 +533,122 @@ class NarrativeService:
         achievement_id: str
     ) -> Optional[object]:
         """Verifica y otorga un logro específico"""
-        # Implementación simple - retorna None por ahora
-        # TODO: Integrar con sistema de logros real
-        return None
+        from database.models import Achievement, UserAchievement
+        
+        # Verificar si el logro existe
+        achievement = await self.session.get(Achievement, achievement_id)
+        if not achievement:
+            return None
+        
+        # Verificar si el usuario ya tiene el logro
+        query = select(UserAchievement).where(
+            and_(
+                UserAchievement.user_id == user_id,
+                UserAchievement.achievement_id == achievement_id
+            )
+        )
+        result = await self.session.execute(query)
+        existing = result.scalar_one_or_none()
+        
+        if existing:
+            return None  # Ya lo tiene
+        
+        # Otorgar el logro
+        user_achievement = UserAchievement(
+            user_id=user_id,
+            achievement_id=achievement_id
+        )
+        self.session.add(user_achievement)
+        await self.session.commit()
+        
+        return achievement
 
     async def _unlock_lore_piece(self, user_id: int, lore_code: str) -> None:
         """Desbloquea una pieza de lore para el usuario"""
-        # TODO: Implementar desbloqueo de lore
-        pass
+        from database.models import LorePiece, UserLorePiece
+        
+        # Buscar la pieza de lore
+        query = select(LorePiece).where(LorePiece.code_name == lore_code)
+        result = await self.session.execute(query)
+        lore_piece = result.scalar_one_or_none()
+        
+        if not lore_piece:
+            return
+        
+        # Verificar si ya la tiene desbloqueada
+        query = select(UserLorePiece).where(
+            and_(
+                UserLorePiece.user_id == user_id,
+                UserLorePiece.lore_piece_id == lore_piece.id
+            )
+        )
+        result = await self.session.execute(query)
+        existing = result.scalar_one_or_none()
+        
+        if existing:
+            return
+        
+        # Desbloquear la pieza
+        user_lore = UserLorePiece(
+            user_id=user_id,
+            lore_piece_id=lore_piece.id
+        )
+        self.session.add(user_lore)
+        await self.session.commit()
 
     async def _give_narrative_points(self, user_id: int, points: int) -> None:
         """Otorga puntos narrativos al usuario"""
-        # TODO: Implementar sistema de puntos
-        pass
+        from database.models import User
+        
+        user = await self.session.get(User, user_id)
+        if user:
+            user.points += points
+            await self.session.commit()
 
     async def _record_fragment_visit(self, fragment_id: str) -> None:
         """Registra la visita a un fragmento para métricas"""
-        # TODO: Implementar métricas
-        pass
+        # Actualizar métricas de fragment
+        query = select(NarrativeMetrics).where(
+            NarrativeMetrics.fragment_id == fragment_id
+        )
+        result = await self.session.execute(query)
+        metrics = result.scalar_one_or_none()
+        
+        if not metrics:
+            metrics = NarrativeMetrics(
+                fragment_id=fragment_id,
+                times_visited=1
+            )
+            self.session.add(metrics)
+        else:
+            metrics.times_visited += 1
+        
+        await self.session.commit()
 
     async def _record_choice_metric(self, fragment_id: str, choice_id: str) -> None:
         """Registra una elección para métricas"""
-        # TODO: Implementar métricas
-        pass
+        query = select(NarrativeMetrics).where(
+            NarrativeMetrics.fragment_id == fragment_id
+        )
+        result = await self.session.execute(query)
+        metrics = result.scalar_one_or_none()
+        
+        if not metrics:
+            metrics = NarrativeMetrics(
+                fragment_id=fragment_id,
+                choice_distribution={choice_id: 1}
+            )
+            self.session.add(metrics)
+        else:
+            if not metrics.choice_distribution:
+                metrics.choice_distribution = {}
+            current_count = metrics.choice_distribution.get(choice_id, 0)
+            metrics.choice_distribution[choice_id] = current_count + 1
+        
+        await self.session.commit()
 
     async def _create_checkpoint(self, user_id: int, state: UserNarrativeState) -> None:
         """Crea un checkpoint del estado actual"""
-        # TODO: Implementar sistema de checkpoints
-        pass
+        # Simple implementación: actualizar el timestamp de last_interaction
+        state.last_interaction_at = datetime.utcnow()
+        await self.session.commit()
