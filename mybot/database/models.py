@@ -52,11 +52,11 @@ class User(Base):
     menu_state = Column(String, default="root")
     is_admin = Column(Boolean, default=False) # New column for admin status
 
+    # Relación con estado narrativo - lazy loading para evitar imports circulares
     @declared_attr
     def narrative_state(cls):
-        from narrative.models import UserNarrativeState
         return relationship(
-            UserNarrativeState,
+            "UserNarrativeState",
             back_populates="user",
             uselist=False,
             lazy="selectin",
