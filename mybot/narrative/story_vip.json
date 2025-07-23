@@ -1,0 +1,135 @@
+{
+  "id": "vip",
+  "title": "Secretos de Diana",
+  "description": "Una inmersión profunda en los misterios más íntimos de Diana y su mundo oculto",
+  "author": "Diana",
+  "version": "1.0.0",
+  "starting_fragment": "vip_intro_1",
+  "chapters": {
+    "4": {
+      "title": "Más Allá del Velo",
+      "description": "Diana revela su verdadera naturaleza y propósito",
+      "fragments": ["vip_intro_1", "vip_intro_2", "vip_decision_1"]
+    },
+    "5": {
+      "title": "El Pacto de Sangre",
+      "description": "Un ritual antiguo que sella destinos",
+      "fragments": ["ritual_1", "ritual_2", "ritual_3", "vip_decision_2"]
+    },
+    "6": {
+      "title": "La Apoteosis",
+      "description": "La transformación final y el nuevo comienzo",
+      "fragments": ["transform_1", "transform_2", "vip_decision_3", "vip_ending_1", "vip_ending_2", "vip_ending_secret"]
+    }
+  },
+  "fragments": {
+    "vip_intro_1": {
+      "id": "vip_intro_1",
+      "type": "story",
+      "title": "El Regreso",
+      "narrator_text": "Has vuelto. Diana sabía que lo harías. Los que prueban el néctar de los dioses rara vez pueden resistir un segundo sorbo. Pero esta vez, querido mío, no hay velos entre nosotros. Esta vez, conocerás la verdad completa.",
+      "atmosphere_text": "El espacio es diferente ahora. Más íntimo, más cargado de poder. Puedes sentir la electricidad en el aire.",
+      "next_fragment": "vip_intro_2",
+      "vip_only": true,
+      "rewards": {
+        "points": 10,
+        "items": ["anillo_iniciado"]
+      },
+      "chapter": 4,
+      "scene": 1
+    },
+    "vip_intro_2": {
+      "id": "vip_intro_2",
+      "type": "story",
+      "narrator_text": "Diana aparece sin pretensiones esta vez. No hay teatro, no hay misterio gradual. Está aquí, en toda su gloria, y tu mente lucha por procesar su verdadera forma. Es hermosa, sí, pero es más que eso. Es poder hecho carne, deseo convertido en deidad.",
+      "atmosphere_text": "Tu percepción se expande. Ves colores que no tienen nombre, sientes emociones que no tienen palabras.",
+      "next_fragment": "vip_decision_1",
+      "vip_only": true,
+      "chapter": 4,
+      "scene": 2
+    },
+    "vip_decision_1": {
+      "id": "vip_decision_1",
+      "type": "decision",
+      "title": "La Pregunta Fundamental",
+      "narrator_text": "'Antes de continuar,' dice Diana, su voz resonando en frecuencias que hacen vibrar tu alma, 'debo preguntarte algo. ¿Qué estás dispuesto a sacrificar por el conocimiento absoluto? ¿Qué parte de tu humanidad intercambiarías por la divinidad?'",
+      "choices": [
+        {
+          "id": "sacrifice_fear",
+          "text": "Sacrificaría mi miedo, abrazo lo desconocido completamente",
+          "next_fragment": "path_fearless_1",
+          "effects": {
+            "relationships": {"diana": 15},
+            "story_flags": {"sacrifice": "fear"}
+          }
+        },
+        {
+          "id": "sacrifice_past",
+          "text": "Sacrificaría mi pasado, renacería como algo nuevo",
+          "next_fragment": "path_reborn_1",
+          "effects": {
+            "relationships": {"diana": 20},
+            "story_flags": {"sacrifice": "past"}
+          }
+        },
+        {
+          "id": "sacrifice_mortality",
+          "text": "Sacrificaría mi mortalidad misma",
+          "next_fragment": "path_immortal_1",
+          "requirements": {
+            "level": 10,
+            "achievements": ["vidente_verdad"]
+          },
+          "effects": {
+            "relationships": {"diana": 30},
+            "story_flags": {"sacrifice": "mortality"}
+          }
+                },
+        {
+          "id": "sacrifice_nothing",
+          "text": "No sacrificaría nada, deseo mantener mi humanidad intacta",
+          "next_fragment": "path_human_1",
+          "effects": {
+            "relationships": {"diana": 5, "lucien": 10},
+            "story_flags": {"sacrifice": "none"}
+          }
+        }
+      ],
+      "vip_only": true,
+      "chapter": 4,
+      "scene": 3
+    },
+    "path_fearless_1": {
+      "id": "path_fearless_1",
+      "type": "story",
+      "narrator_text": "Diana sonríe, y es como si mil soles amanecieran a la vez. 'Sin miedo no hay límites,' susurra, tocando tu frente. El contacto es eléctrico, transformador. Sientes cómo cada temor que alguna vez tuviste se disuelve como niebla bajo el sol del mediodía.",
+      "next_fragment": "ritual_1",
+      "vip_only": true,
+      "rewards": {
+        "points": 20,
+        "achievements": ["sin_miedo"]
+      },
+      "chapter": 4,
+      "scene": 4
+    },
+    "ritual_1": {
+      "id": "ritual_1",
+      "type": "story",
+      "title": "El Ritual Comienza",
+      "narrator_text": "Lucien aparece con elementos ancestrales: velas de cera negra, un cáliz de plata, incienso que huele a tiempo perdido. 'El ritual de vinculación,' explica con reverencia. 'Pocos son considerados dignos.' Diana extiende su mano, esperando la tuya.",
+      "atmosphere_text": "El aire se espesa con poder antiguo. Las paredes parecen respirar.",
+      "next_fragment": "ritual_2",
+      "vip_only": true,
+      "chapter": 5,
+      "scene": 1
+    }
+  },
+  "total_fragments": 25,
+  "total_decisions": 5,
+  "estimated_duration": "45-60 minutos",
+  "content_warnings": ["Contenido adulto", "Temas existenciales", "Transformación psicológica"],
+  "min_level": 5,
+  "requires_vip": true,
+  "created_at": "2024-01-15T00:00:00Z",
+  "updated_at": "2024-01-15T00:00:00Z"
+}

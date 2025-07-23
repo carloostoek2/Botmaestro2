@@ -1,0 +1,167 @@
+{
+  "id": "free",
+  "title": "El Despertar",
+  "description": "Una introducción al mundo misterioso de Diana y sus secretos",
+  "author": "Diana",
+  "version": "1.0.0",
+  "starting_fragment": "intro_1",
+  "chapters": {
+    "1": {
+      "title": "Primeros Pasos",
+      "description": "El viajero llega al mundo de Diana",
+      "fragments": ["intro_1", "intro_2", "decision_1"]
+    },
+    "2": {
+      "title": "El Despertar",
+      "description": "Primeras decisiones y consecuencias",
+      "fragments": ["path_curious_1", "path_cautious_1", "meeting_diana_1"]
+    },
+    "3": {
+      "title": "Revelaciones",
+      "description": "Los primeros secretos se revelan",
+      "fragments": ["revelation_1", "choice_trust_1", "ending_free_1"]
+    }
+  },
+  "fragments": {
+    "intro_1": {
+      "id": "intro_1",
+      "type": "story",
+      "title": "Llegada",
+      "narrator_text": "Bienvenido, viajero. Soy Lucien, el mayordomo de esta mansión. Diana te esperaba, aunque quizás no sepas quién es ella aún. Este lugar guarda secretos que pocos han visto.",
+      "atmosphere_text": "El aire huele a jazmín y misterio. Las sombras danzan en las paredes como si tuvieran vida propia.",
+      "next_fragment": "intro_2",
+      "chapter": 1,
+      "scene": 1
+    },
+    "intro_2": {
+      "id": "intro_2",
+      "type": "story",
+      "narrator_text": "Cada paso que das aquí tiene consecuencias. Cada decisión abre puertas... o las cierra para siempre. Diana observa desde las sombras, evaluando si eres digno de sus secretos.",
+      "atmosphere_text": "Sientes una presencia observándote, cálida pero enigmática.",
+      "next_fragment": "decision_1",
+      "chapter": 1,
+      "scene": 2
+    },
+    "decision_1": {
+      "id": "decision_1",
+      "type": "decision",
+      "title": "Primera Impresión",
+      "narrator_text": "Ante ti se abren dos caminos. Puedes explorar con curiosidad desenfrenada, o proceder con cautela. ¿Qué tipo de viajero eres?",
+      "choices": [
+        {
+          "id": "choice_curious",
+          "text": "Explorar con curiosidad",
+          "next_fragment": "path_curious_1",
+          "effects": {
+            "relationships": {"diana": 5},
+            "story_flags": {"personality": "curious"}
+          }
+        },
+        {
+          "id": "choice_cautious",
+          "text": "Proceder con cautela",
+          "next_fragment": "path_cautious_1",
+          "effects": {
+            "relationships": {"lucien": 5},
+            "story_flags": {"personality": "cautious"}
+          }
+        }
+      ],
+      "chapter": 1,
+      "scene": 3
+    },
+    "path_curious_1": {
+      "id": "path_curious_1",
+      "type": "story",
+      "narrator_text": "Tu curiosidad es... refrescante. Diana aprecia a quienes no temen lo desconocido. Te has ganado su atención, y eso es más valioso de lo que imaginas.",
+      "next_fragment": "meeting_diana_1",
+      "rewards": {
+        "points": 5
+      },
+      "chapter": 2,
+      "scene": 1
+    },
+    "path_cautious_1": {
+      "id": "path_cautious_1",
+      "type": "story",
+      "narrator_text": "La prudencia es una virtud que respeto. No todos los que llegan aquí comprenden que algunos secretos deben ganarse, no tomarse. Has mostrado sabiduría.",
+      "next_fragment": "meeting_diana_1",
+      "rewards": {
+        "points": 3
+      },
+      "chapter": 2,
+      "scene": 1
+    },
+    "meeting_diana_1": {
+      "id": "meeting_diana_1",
+      "type": "story",
+      "title": "El Encuentro",
+      "narrator_text": "Una figura emerge de las sombras. Es Diana. Su presencia llena la habitación con una energía que no puedes describir. Te mira directamente a los ojos y sonríe.",
+      "atmosphere_text": "El tiempo parece detenerse. Solo existen sus ojos y tu respiración.",
+      "next_fragment": "choice_trust_1",
+      "chapter": 2,
+      "scene": 2
+    },
+    "choice_trust_1": {
+      "id": "choice_trust_1",
+      "type": "decision",
+      "title": "Momento de Verdad",
+      "narrator_text": "Diana extiende su mano hacia ti. 'Ven conmigo,' susurra. 'Te mostraré algo que cambiará tu perspectiva para siempre.' ¿Confías en ella?",
+      "choices": [
+        {
+          "id": "trust_diana",
+          "text": "Tomar su mano con confianza",
+          "next_fragment": "revelation_1",
+          "effects": {
+            "relationships": {"diana": 10},
+            "story_flags": {"trusts_diana": true}
+          }
+        },
+        {
+          "id": "hesitate",
+          "text": "Dudar un momento",
+          "next_fragment": "ending_free_1",
+          "effects": {
+            "relationships": {"diana": -5}
+          }
+        }
+      ],
+      "chapter": 2,
+      "scene": 3
+    },
+    "revelation_1": {
+      "id": "revelation_1",
+      "type": "story",
+      "title": "La Primera Revelación",
+      "narrator_text": "Diana te lleva a una habitación secreta. Las paredes están cubiertas de espejos que reflejan no tu imagen, sino tus deseos más profundos. 'Esto es solo el comienzo,' dice con una sonrisa enigmática.",
+      "next_fragment": "ending_free_1",
+      "rewards": {
+        "points": 10,
+        "lore_pieces": ["secret_room"]
+      },
+      "chapter": 3,
+      "scene": 1
+    },
+    "ending_free_1": {
+      "id": "ending_free_1",
+      "type": "ending",
+      "title": "Final del Despertar",
+      "narrator_text": "Has completado tu primera aventura en el mundo de Diana. Pero esto es solo el comienzo. Hay mucho más por descubrir... si te atreves a continuar.",
+      "atmosphere_text": "Una sensación de anticipación llena el aire. Sabes que volverás.",
+      "rewards": {
+        "points": 15,
+        "achievements": ["first_story_complete"]
+      },
+      "chapter": 3,
+      "scene": 2
+    }
+  },
+  "total_fragments": 8,
+  "total_decisions": 2,
+  "estimated_duration": "10-15 minutos",
+  "content_warnings": ["Contenido sugestivo", "Temas místicos"],
+  "min_level": 1,
+  "requires_vip": false,
+  "created_at": "2024-01-15T00:00:00Z",
+  "updated_at": "2024-01-15T00:00:00Z"
+}
