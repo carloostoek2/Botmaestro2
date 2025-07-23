@@ -174,10 +174,6 @@ async def main() -> None:
         # Middlewares outer (se ejecutan después de session_middleware)
         dp.update.outer_middleware(user_reg_middleware)
 
-        # Narrative 
-        ("narrative", narrative_router),
-        ("admin_narrative", admin_narrative_handlers),
-        
         # Middleware de puntos (inner)
         dp.message.middleware(points_middleware)
         dp.poll_answer.middleware(points_middleware)
@@ -208,6 +204,7 @@ async def main() -> None:
             ("combinar_pistas", combinar_pistas.router),
             ("channel_access", channel_access_router),
             ("narrative", narrative_router),
+            ("admin_narrative", admin_narrative_handlers),
         ]
         
         for name, router in routers:
