@@ -18,6 +18,7 @@ from uuid import uuid4
 from sqlalchemy.sql import func
 from sqlalchemy.future import select
 import enum
+from narrative.models import UserNarrativeState, StoryFragment, UserDecision, NarrativeMetrics
 from .base import Base
 from sqlalchemy import Column, BigInteger, String, Float, Integer, JSON, DateTime
 from sqlalchemy.orm import relationship, declared_attr

@@ -62,6 +62,7 @@ from handlers.free_channel_admin import router as free_channel_admin_router
 from handlers.publication_test import router as publication_test_router
 from handlers.main_menu import router as main_menu_router
 from handlers.narrative_handler import router as narrative_router
+from handlers.admin_narrative_handlers import router as admin_narrative_handlers
 
 import combinar_pistas
 from backpack import router as backpack_router
@@ -171,6 +172,10 @@ async def main() -> None:
         # Middlewares outer (se ejecutan después de session_middleware)
         dp.update.outer_middleware(user_reg_middleware)
 
+        # Narrative 
+        ("narrative", narrative_router),
+        ("admin_narrative", admin_narrative_handlers),
+        
         # Middleware de puntos (inner)
         dp.message.middleware(points_middleware)
         dp.poll_answer.middleware(points_middleware)
