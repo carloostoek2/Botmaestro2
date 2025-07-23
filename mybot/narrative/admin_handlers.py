@@ -68,4 +68,3 @@ async def narrative_admin_command(message: Message, session: AsyncSession):
         session,
         menu_state="narrative_admin_main"
     )
-  
