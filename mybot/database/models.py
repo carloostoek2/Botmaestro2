@@ -54,7 +54,7 @@ class User(Base):
 
     @declared_attr
     def narrative_state(cls):
-        from .narrative_models import UserNarrativeState
+        from narrative.models import UserNarrativeState
         return relationship(
             UserNarrativeState,
             back_populates="user",
