@@ -137,6 +137,7 @@ class NarrativeService:
             return False, "Opción no válida", None
         
         # Verificar requisitos de la elección
+        from database.models import User
         user = await self.session.get(User, user_id)
         user_data = await self._get_user_data_for_requirements(user_id)
         can_choose, missing = self.story_manager.check_requirements(
