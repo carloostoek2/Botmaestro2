@@ -106,6 +106,20 @@ async def get_points_multiplier(bot: Bot, user_id: int, session: AsyncSession | 
 is_vip = is_vip_member
 
 
+async def is_vip_active(user_id: int, session: AsyncSession) -> bool:
+    """Check if user has active VIP status - simplified version for narrative system"""
+    try:
+        user = await session.get(User, user_id)
+        if user and user.role == "vip":
+            # Check if subscription is still valid
+            if user.vip_expires_at is None or user.vip_expires_at > datetime.utcnow():
+                return True
+        return False
+    except Exception as e:
+        logger.error(f"Error checking VIP status for user {user_id}: {e}")
+        return False
+
+
 async def get_user_role(
     bot: Bot, user_id: int, session: AsyncSession | None = None
 ) -> str:
