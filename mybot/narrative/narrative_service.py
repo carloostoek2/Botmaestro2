@@ -379,8 +379,9 @@ class NarrativeService:
             "last_played": state.last_interaction_at
         }
     
-    async def check_achievements(self, user_id: int) -> List[Achievement]:
+    async def check_achievements(self, user_id: int) -> List[Any]:
         """Verifica y otorga logros narrativos"""
+        from database.models import Achievement
         state = await self.get_user_state(user_id)
         if not state:
             return []
