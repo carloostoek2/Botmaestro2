@@ -150,3 +150,4 @@ class NarrativeMetrics(Base):
     rating_count = Column(Integer, default=0)
     
     updated_at = Column(DateTime, default=func.now(), onupdate=func.now())
+  
