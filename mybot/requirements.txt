@@ -5,3 +5,4 @@ APScheduler
 python-dotenv
 asyncpg
 psycopg2-binary
+pydantic>=2.0.0
