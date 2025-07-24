@@ -2,21 +2,50 @@
 Menu creators for specific menu types.
 Separated to avoid circular imports and improve maintainability.
 """
+from __future__ import annotations
 from typing import Tuple
 from aiogram.types import InlineKeyboardMarkup
 from sqlalchemy.ext.asyncio import AsyncSession
 from database.models import User
-from utils.keyboard_utils import (
-    get_profile_keyboard,
-    get_missions_keyboard,
-    get_reward_keyboard,
-    get_ranking_keyboard
-)
-from utils.message_utils import get_profile_message, get_ranking_message
+try:
+    from utils.keyboard_utils import (
+        get_profile_keyboard,
+        get_missions_keyboard,
+        get_reward_keyboard,
+        get_ranking_keyboard
+    )
+    from utils.message_utils import get_profile_message, get_ranking_message
+except ImportError:
+    # Fallback keyboards
+    from keyboards.common import get_back_kb
+    
+    def get_profile_keyboard():
+        return get_back_kb("main")
+    
+    def get_missions_keyboard(missions):
+        return get_back_kb("main")
+    
+    def get_reward_keyboard(rewards, claimed_ids):
+        return get_back_kb("main")
+    
+    def get_ranking_keyboard():
+        return get_back_kb("main")
+    
+    async def get_profile_message(user, missions, session):
+        return f"👤 **Perfil de {user.first_name or 'Usuario'}**\n\nPuntos: {user.points}\nNivel: {user.level}"
+    
+    async def get_ranking_message(users, viewer_id):
+        return "🏆 **Ranking**\n\nFuncionalidad en desarrollo..."
+
 from services.mission_service import MissionService
 from services.reward_service import RewardService
 from services.point_service import PointService
-from keyboards.auction_kb import get_auction_main_kb
+try:
+    from keyboards.auction_kb import get_auction_main_kb
+except ImportError:
+    from keyboards.common import get_back_kb
+    def get_auction_main_kb():
+        return get_back_kb("main")
 
 async def create_profile_menu(user_id: int, session: AsyncSession) -> Tuple[str, InlineKeyboardMarkup]:
     """Create the profile menu for a user."""

@@ -26,7 +26,51 @@ async def enviar_notificacion_gamificada(bot: Bot, user_id: int):
     await bot.send_message(user_id, f"💬 {mensaje}")
 
 
-async def send_narrative_notification(bot: Bot, user_id: int, pista_code: str, origen: str = "Sistema"):
+async def send_narrative_notification(bot: Bot, user_id: int, notification_type: str, context: dict = None):
+    """
+    Envía notificaciones narrativas mejoradas
+    
+    Args:
+        bot: Bot instance
+        user_id: ID del usuario
+        notification_type: Tipo de notificación ('new_hint', 'achievement', etc.)
+        context: Contexto adicional con información específica
+    """
+    if context is None:
+        context = {}
+    
+    if notification_type == "new_hint":
+        pista_code = context.get('hint_code', 'Desconocida')
+        origen = context.get('source', 'Sistema')
+        
+        mensajes = [
+            f"🎩 Lucien: Una nueva pieza ha caído en tus manos... {pista_code}. No la pierdas.",
+            f"🎩 Lucien: {pista_code} se ha revelado para ti. ¿Podrás entender su verdadero valor?",
+            f"🎩 Lucien: Has desbloqueado algo nuevo. {pista_code}... interesante.",
+            f"🎩 Lucien: El Diván susurra: {pista_code} es ahora tuyo.",
+            f"🎩 Lucien: {pista_code} proviene de {origen}. ¿Accidente o destino?"
+        ]
+    elif notification_type == "achievement":
+        achievement_name = context.get('achievement_name', 'Logro desconocido')
+        mensajes = [
+            f"🏆 Lucien: Has desbloqueado un logro: {achievement_name}. Diana está impresionada.",
+            f"🏆 Lucien: {achievement_name}... un logro digno de reconocimiento.",
+        ]
+    else:
+        # Fallback para compatibilidad con código anterior
+        pista_code = str(notification_type)  # Asumir que es el código de pista
+        origen = context.get('source', 'Sistema')
+        mensajes = [
+            f"🎩 Lucien: Una nueva pieza ha caído en tus manos... {pista_code}. No la pierdas.",
+            f"🎩 Lucien: {pista_code} se ha revelado para ti. ¿Podrás entender su verdadero valor?",
+        ]
+
+    mensaje = random.choice(mensajes)
+    await bot.send_message(user_id, mensaje)
+
+# Función de compatibilidad para código existente
+async def send_narrative_notification_legacy(bot: Bot, user_id: int, pista_code: str, origen: str = "Sistema"):
+    """Función de compatibilidad para el código existente"""
     mensajes = [
         f"🎩 Lucien: Una nueva pieza ha caído en tus manos... {pista_code}. No la pierdas.",
         f"🎩 Lucien: {pista_code} se ha revelado para ti. ¿Podrás entender su verdadero valor?",

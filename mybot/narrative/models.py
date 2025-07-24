@@ -1,11 +1,12 @@
 """
 Modelos de base de datos para el sistema narrativo
 """
+from __future__ import annotations
 from sqlalchemy import (
     Column, Integer, String, BigInteger, DateTime, Boolean,
     JSON, Text, ForeignKey, Float, Enum, UniqueConstraint
 )
-from sqlalchemy.orm import relationship
+from sqlalchemy.orm import relationship, declared_attr
 from sqlalchemy.sql import func
 from database.base import Base
 import enum
@@ -66,9 +67,14 @@ class StoryFragment(Base):
     # Relaciones
     decisions = relationship("UserDecision", back_populates="fragment", lazy="selectin")
     
-    # REF: [database/models.py] Achievement - Relación con logros
-    unlocks_achievement_id = Column(String, ForeignKey("achievements.id"), nullable=True)
-    achievement_link = relationship("Achievement", back_populates="story_fragments")
+    # Relación con logros usando declared_attr para evitar imports circulares
+    @declared_attr
+    def unlocks_achievement_id(cls):
+        return Column(String, ForeignKey("achievements.id"), nullable=True)
+    
+    @declared_attr
+    def achievement_link(cls):
+        return relationship("Achievement", foreign_keys=[cls.unlocks_achievement_id], lazy="selectin")
 
 
 class UserNarrativeState(Base):
@@ -99,7 +105,10 @@ class UserNarrativeState(Base):
     completed_at = Column(DateTime, nullable=True)
     
     # Relaciones
-    user = relationship("User", back_populates="narrative_state")
+    @declared_attr
+    def user(cls):
+        return relationship("User", back_populates="narrative_state", lazy="selectin")
+    
     current_fragment = relationship("StoryFragment", foreign_keys=[current_fragment_id])
     decisions = relationship("UserDecision", back_populates="user_state", lazy="selectin")
 
@@ -125,7 +134,10 @@ class UserDecision(Base):
     
     # Relaciones
     fragment = relationship("StoryFragment", back_populates="decisions")
-    user_state = relationship("UserNarrativeState", back_populates="decisions")
+    
+    @declared_attr
+    def user_state(cls):
+        return relationship("UserNarrativeState", back_populates="decisions", lazy="selectin")
     
     __table_args__ = (
         UniqueConstraint("user_id", "fragment_id", name="uix_user_fragment_decision"),

@@ -1,6 +1,7 @@
 """
 Constantes del sistema narrativo
 """
+from __future__ import annotations
 
 # Personajes principales
 CHARACTERS = {

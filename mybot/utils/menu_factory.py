@@ -23,13 +23,40 @@ import logging
 from aiogram.utils.keyboard import InlineKeyboardBuilder # Importar InlineKeyboardBuilder
 
 # Importar creadores de menú específicos (asegúrate de que estos archivos existen)
-from utils.menu_creators import (
-    create_profile_menu,
-    create_missions_menu,
-    create_rewards_menu,
-    create_auction_menu,
-    create_ranking_menu
-)
+try:
+    from utils.menu_creators import (
+        create_profile_menu,
+        create_missions_menu,
+        create_rewards_menu,
+        create_auction_menu,
+        create_ranking_menu
+    )
+    MENU_CREATORS_AVAILABLE = True
+except ImportError as e:
+    logger.warning(f"Menu creators not available: {e}")
+    MENU_CREATORS_AVAILABLE = False
+    
+    # Fallback functions
+    async def create_profile_menu(user_id, session):
+        from keyboards.common import get_back_kb
+        return "👤 **Perfil**\n\nFuncionalidad en desarrollo...", get_back_kb("main")
+    
+    async def create_missions_menu(user_id, session):
+        from keyboards.common import get_back_kb
+        return "🎯 **Misiones**\n\nFuncionalidad en desarrollo...", get_back_kb("main")
+    
+    async def create_rewards_menu(user_id, session):
+        from keyboards.common import get_back_kb
+        return "🎁 **Recompensas**\n\nFuncionalidad en desarrollo...", get_back_kb("main")
+    
+    async def create_auction_menu(user_id, session):
+        from keyboards.common import get_back_kb
+        return "🏛️ **Subastas**\n\nFuncionalidad en desarrollo...", get_back_kb("main")
+    
+    async def create_ranking_menu(user_id, session):
+        from keyboards.common import get_back_kb
+        return "🏆 **Ranking**\n\nFuncionalidad en desarrollo...", get_back_kb("main")
+
 from utils.text_utils import sanitize_text # Asegúrate de que esta importación exista y sea correcta
 
 logger = logging.getLogger(__name__)

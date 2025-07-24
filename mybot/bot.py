@@ -63,8 +63,15 @@ from handlers.publication_test import router as publication_test_router
 from handlers.main_menu import router as main_menu_router
 
 # Integración del sistema narrativo
-from narrative.handlers import router as narrative_router
-from narrative.admin_handlers import router as admin_narrative_handlers
+try:
+    from narrative.handlers import router as narrative_router
+    from narrative.admin_handlers import router as admin_narrative_handlers
+    NARRATIVE_AVAILABLE = True
+except ImportError as e:
+    logger.warning(f"Narrative module not available: {e}")
+    narrative_router = None
+    admin_narrative_handlers = None
+    NARRATIVE_AVAILABLE = False
 
 import combinar_pistas
 from backpack import router as backpack_router
@@ -203,13 +210,21 @@ async def main() -> None:
             ("lore", lore_router),
             ("combinar_pistas", combinar_pistas.router),
             ("channel_access", channel_access_router),
-            ("narrative", narrative_router),  # <--- Integración narrativa
-            ("admin_narrative", admin_narrative_handlers),
         ]
         
+        # Agregar routers narrativos solo si están disponibles
+        if NARRATIVE_AVAILABLE:
+            routers.extend([
+                ("narrative", narrative_router),
+                ("admin_narrative", admin_narrative_handlers),
+            ])
+        
         for name, router in routers:
-            dp.include_router(router)
-            logger.info(f"Router {name} registrado")
+            if router is not None:
+                dp.include_router(router)
+                logger.info(f"Router {name} registrado")
+            else:
+                logger.warning(f"Router {name} no disponible")
 
         # Configurar tareas en segundo plano
         task_manager = BackgroundTaskManager()

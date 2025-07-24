@@ -1,14 +1,24 @@
 """
 Decoradores para verificaciones comunes en el sistema narrativo
 """
+from __future__ import annotations
 import functools
-from typing import Callable, Any
+from typing import Callable, Any, TYPE_CHECKING
 from aiogram.types import CallbackQuery, Message
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from database.models import User
+if TYPE_CHECKING:
+    from database.models import User
+    from .models import UserNarrativeState
+else:
+    try:
+        from database.models import User
+        from .models import UserNarrativeState
+    except ImportError:
+        User = None
+        UserNarrativeState = None
+
 from utils.user_roles import is_vip_active
-from .models import UserNarrativeState
 
 
 def ensure_narrative_state(func: Callable) -> Callable:

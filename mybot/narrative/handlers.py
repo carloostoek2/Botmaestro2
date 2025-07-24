@@ -10,7 +10,7 @@ from aiogram.fsm.context import FSMContext
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from utils.menu_manager import menu_manager
-from utils.user_roles import is_vip_active
+from utils.user_roles import is_vip_active, is_admin
 from utils.text_utils import sanitize_text
 from database.models import User
 from .narrative_service import NarrativeService

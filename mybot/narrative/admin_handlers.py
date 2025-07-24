@@ -13,6 +13,7 @@ from utils.menu_manager import menu_manager
 from .models import StoryFragment, UserNarrativeState, UserDecision, NarrativeMetrics
 from .narrative_service import NarrativeService
 from .keyboards import NarrativeKeyboards
+from database.models import User
 
 logger = logging.getLogger(__name__)
 router = Router()

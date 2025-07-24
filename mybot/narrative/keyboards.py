@@ -1,11 +1,17 @@
 """
 Teclados inline para el sistema narrativo
 """
+from __future__ import annotations
 from typing import List, Optional, Dict, Any
 from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton
 from aiogram.utils.keyboard import InlineKeyboardBuilder
 
-from .schemas import ChoiceSchema, FragmentSchema
+try:
+    from .schemas import ChoiceSchema, FragmentSchema
+except ImportError:
+    ChoiceSchema = dict
+    FragmentSchema = dict
+    
 from .constants import MAX_CHOICES_PER_FRAGMENT, BACK_BUTTON_ENABLED
 
 

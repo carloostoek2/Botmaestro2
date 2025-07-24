@@ -8,7 +8,13 @@ from sqlalchemy import select, and_, func
 from database.models import LorePiece, UserLorePiece
 from database.hint_combination import HintCombination
 from database.setup import get_session
-from notificaciones import send_narrative_notification
+try:
+    from notificaciones import send_narrative_notification
+except ImportError:
+    async def send_narrative_notification(bot, user_id, notification_type, context):
+        """Fallback notification function"""
+        await bot.send_message(user_id, f"🎩 Nueva pista desbloqueada: {context.get('hint_code', 'Desconocida')}")
+        
 import random
 from datetime import datetime
 

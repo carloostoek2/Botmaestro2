@@ -1,13 +1,23 @@
 """
 Gestor de historias y contenido narrativo
 """
+from __future__ import annotations
 import json
 import logging
 from pathlib import Path
-from typing import Dict, List, Optional, Any, Tuple
+from typing import Dict, List, Optional, Any, Tuple, TYPE_CHECKING
 from datetime import datetime
 
-from .schemas import StorySchema, FragmentSchema, ChoiceSchema
+if TYPE_CHECKING:
+    from .schemas import StorySchema, FragmentSchema, ChoiceSchema
+else:
+    try:
+        from .schemas import StorySchema, FragmentSchema, ChoiceSchema
+    except ImportError:
+        StorySchema = dict
+        FragmentSchema = dict
+        ChoiceSchema = dict
+        
 from .constants import MAX_CHOICES_PER_FRAGMENT, NARRATIVE_POINTS
 
 logger = logging.getLogger(__name__)

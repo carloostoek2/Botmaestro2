@@ -6,8 +6,11 @@ router = Router()
 
 @router.message(F.text == "🎒 Mochila")
 async def handle_backpack_button(message: Message, session: AsyncSession):
-    from backpack import mostrar_mochila_narrativa
-    await mostrar_mochila_narrativa(message)
+    try:
+        from backpack import mostrar_mochila_narrativa
+        await mostrar_mochila_narrativa(message)
+    except ImportError:
+        await message.answer("🎒 **Mochila**\n\nFuncionalidad en desarrollo...")
 
 @router.message(F.text == "💰 Billetera")
 async def handle_wallet_button(message: Message, session: AsyncSession):

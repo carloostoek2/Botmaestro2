@@ -14,7 +14,7 @@ TABLES_ORDER = [
     'users',
     'achievements',
     'story_fragments',
-    'user_narrative_states',
+    'user_narrative_states', 
     'user_decisions',
     'narrative_metrics',
     'rewards',

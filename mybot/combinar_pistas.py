@@ -8,7 +8,12 @@ from sqlalchemy.future import select
 from database.setup import get_session
 from database.models import UserLorePiece, LorePiece
 from database.hint_combination import HintCombination
-from narrativa import desbloquear_pista
+try:
+    from narrativa import desbloquear_pista
+except ImportError:
+    # Fallback function
+    async def desbloquear_pista(bot, user_id, pista_code):
+        await bot.send_message(user_id, f"🎩 Has desbloqueado: {pista_code}")
 
 router = Router()
 

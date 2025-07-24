@@ -11,6 +11,7 @@ from .models import StoryFragment, UserNarrativeState, UserDecision, NarrativeMe
 from .story_manager import StoryManager
 from .schemas import FragmentSchema, ChoiceSchema
 from .constants import NARRATIVE_POINTS, AUTO_SAVE_INTERVAL
+from database.models import User, Achievement, UserAchievement, LorePiece, UserLorePiece
 
 logger = logging.getLogger(__name__)
 
