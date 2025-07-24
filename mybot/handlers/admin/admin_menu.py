@@ -358,11 +358,18 @@ async def admin_free_channel_redirect(callback: CallbackQuery, session: AsyncSes
 
 
 @router.message(F.text.startswith("/give_hint "))
-async def cmd_give_hint(message: Message):
+async def cmd_give_hint(message: Message, session: AsyncSession):
     """Comando de admin para dar una pista a un usuario."""
     if not await is_admin(message.from_user.id, session):
         await message.answer(
             "❌ **Acceso Denegado**\n\nNo tienes permisos para usar este comando.",
+            parse_mode="HTML",
+        )
+        return
+
+    if not NARRATIVE_BACKPACK_AVAILABLE:
+        await message.answer(
+            "❌ **Función No Disponible**\n\nEl sistema de pistas narrativas no está disponible.",
             parse_mode="HTML",
         )
         return
